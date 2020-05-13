@@ -1,4 +1,4 @@
-# event_map
+# EventMaps
 
 A new Flutter project.
 
