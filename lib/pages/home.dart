@@ -94,10 +94,10 @@ class _HomePageState extends State<HomePage>
       ),
       extendBodyBehindAppBar: true,
       extendBody: true,
-      // body: Container(
-      //   color: Colors.grey,
-      // ),
-      //Local do Mapa
+      body: Container(
+        color: Colors.grey,
+      ),
+      /*Local do Mapa
       body: Container(
         width: double.infinity,
         height: double.infinity,
@@ -110,6 +110,7 @@ class _HomePageState extends State<HomePage>
           ],
         ),
       ),
+      */
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: GestureDetector(
         onVerticalDragUpdate: controller.onDrag,
