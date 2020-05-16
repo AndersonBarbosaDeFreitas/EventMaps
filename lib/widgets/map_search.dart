@@ -70,29 +70,33 @@ class MapSearch extends SearchDelegate<String> {
         ? recentEvents
         : events.where((event) => event.startsWith(query)).toList();
 
-    return ListView.builder(
-      itemBuilder: (context, index) => ListTile(
-        onTap: () {
-          showResults(context);
-          query = suggestionList[index];
-        },
-        leading: Icon(Icons.event),
-        title: RichText(
-          text: TextSpan(
-            text: suggestionList[index].substring(0, query.length),
-            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-            children: [
-              TextSpan(
-                text: suggestionList[index].substring(query.length),
-                style: TextStyle(
-                  color: Colors.grey,
+    return Container(
+      color: Colors.white,
+      child: ListView.builder(
+        itemBuilder: (context, index) => ListTile(
+          onTap: () {
+            showResults(context);
+            query = suggestionList[index];
+          },
+          leading: Icon(Icons.event),
+          title: RichText(
+            text: TextSpan(
+              text: suggestionList[index].substring(0, query.length),
+              style:
+                  TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+              children: [
+                TextSpan(
+                  text: suggestionList[index].substring(query.length),
+                  style: TextStyle(
+                    color: Colors.grey,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
+        itemCount: suggestionList.length,
       ),
-      itemCount: suggestionList.length,
     );
   }
 }
