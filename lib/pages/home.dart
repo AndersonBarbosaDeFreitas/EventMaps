@@ -1,6 +1,7 @@
 import 'package:event_map/widgets/explorar_itens/category.dart';
 import 'package:event_map/widgets/explorar_itens/list_events.dart';
 import 'package:event_map/widgets/map_search.dart';
+import 'package:event_map/widgets/marker_information.dart';
 import 'package:expandable_bottom_bar/expandable_bottom_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -75,7 +76,11 @@ class _HomePageState extends State<HomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      drawer: Drawer(),
+      drawer: Drawer(
+        child: Container(
+          color: Colors.white,
+        ),
+      ),
       appBar: AppBar(
         iconTheme: IconThemeData(color: Color(0xFF37474F)),
         backgroundColor: Colors.transparent,
@@ -94,8 +99,29 @@ class _HomePageState extends State<HomePage>
       ),
       extendBodyBehindAppBar: true,
       extendBody: true,
-      body: Container(
-        color: Colors.grey,
+      body: Center(
+        child: Container(
+          color: Colors.grey,
+          child: Center(
+            child: RawMaterialButton(
+              fillColor: Colors.green,
+              child: Text("Test Marker"),
+              onPressed: () {
+                showModalBottomSheet(
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (context) {
+                    return MarkernInformationWidget(
+                      nameEvent: "Nome do Evento Selecionado",
+                      addressEvent: "Endereço do Evento Selecionado",
+                      colorCategory: Color(0xFF00BCD4),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+        ),
       ),
       /*Local do Mapa
       body: Container(
@@ -135,7 +161,7 @@ class _HomePageState extends State<HomePage>
         horizontalMargin: 0,
         bottomOffset: 35,
         bottomAppBarColor: Colors.transparent,
-        expandedHeight: MediaQuery.of(context).size.height / 1.7,
+        expandedHeight: MediaQuery.of(context).size.height / 1.65,
         expandedDecoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.only(
@@ -143,7 +169,7 @@ class _HomePageState extends State<HomePage>
             topRight: Radius.circular(20),
           ),
         ),
-        expandedBody: SingleChildScrollView(child: _buildExpandedBody()),
+        expandedBody: _buildExpandedBody(),
         bottomAppBarBody: Row(
           mainAxisSize: MainAxisSize.max,
         ),
@@ -151,32 +177,36 @@ class _HomePageState extends State<HomePage>
     );
   }
 
-  Column _buildExpandedBody() {
-    return Column(
-      mainAxisSize: MainAxisSize.max,
-      crossAxisAlignment: CrossAxisAlignment.start,
+  Wrap _buildExpandedBody() {
+    return Wrap(
       children: <Widget>[
-        Padding(
-            padding: const EdgeInsets.only(
-          top: 20,
-          bottom: 20,
-        )),
-        Container(
-          padding: const EdgeInsets.only(
-            left: 20,
-            bottom: 10,
-          ),
-          child: Text(
-            "Perto de você",
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.bold,
+        Column(
+          mainAxisSize: MainAxisSize.max,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Padding(
+                padding: const EdgeInsets.only(
+              top: 20,
+              bottom: 20,
+            )),
+            Container(
+              padding: const EdgeInsets.only(
+                left: 20,
+                bottom: 10,
+              ),
+              child: Text(
+                "Perto de você",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
-          ),
+            _buildListEvents(),
+            Padding(padding: EdgeInsets.all(5)),
+            _buildCategories(),
+          ],
         ),
-        _buildListEvents(),
-        Padding(padding: EdgeInsets.all(5)),
-        _buildCategories(),
       ],
     );
   }
@@ -234,6 +264,7 @@ class _HomePageState extends State<HomePage>
         width: MediaQuery.of(context).size.width,
         child: GridView.builder(
           itemCount: categories.length,
+          primary: false,
           gridDelegate:
               SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
           itemBuilder: (BuildContext context, int index) {
