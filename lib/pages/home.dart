@@ -1,10 +1,11 @@
 import 'package:event_map/widgets/explorar_itens/category.dart';
 import 'package:event_map/widgets/explorar_itens/list_events.dart';
+import 'package:event_map/widgets/google_map.dart';
 import 'package:event_map/widgets/map_search.dart';
-import 'package:event_map/widgets/marker_information.dart';
+//import 'package:event_map/widgets/marker_information.dart';
 import 'package:expandable_bottom_bar/expandable_bottom_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+//import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -13,10 +14,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage>
     with SingleTickerProviderStateMixin {
-  final CameraPosition _kGooglePlex = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
-  );
 
   BottomBarController controller;
   List<CategoryWidget> categories = [
@@ -99,44 +96,16 @@ class _HomePageState extends State<HomePage>
       ),
       extendBodyBehindAppBar: true,
       extendBody: true,
-      body: Center(
-        child: Container(
-          color: Colors.grey,
-          child: Center(
-            child: RawMaterialButton(
-              fillColor: Colors.green,
-              child: Text("Test Marker"),
-              onPressed: () {
-                showModalBottomSheet(
-                  isScrollControlled: true,
-                  context: context,
-                  builder: (context) {
-                    return MarkernInformationWidget(
-                      nameEvent: "Nome do Evento Selecionado",
-                      addressEvent: "Endereço do Evento Selecionado",
-                      colorCategory: Color(0xFF00BCD4),
-                    );
-                  },
-                );
-              },
-            ),
-          ),
-        ),
-      ),
-      /*Local do Mapa
       body: Container(
         width: double.infinity,
         height: double.infinity,
         child: Stack(
           children: <Widget>[
-            GoogleMap(
-              initialCameraPosition: _kGooglePlex,
-              zoomControlsEnabled: false,
-            )
+            MapGoogle(),
           ],
         ),
       ),
-      */
+
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: GestureDetector(
         onVerticalDragUpdate: controller.onDrag,
